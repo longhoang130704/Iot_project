@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class AdafruitIOClient {
     private static final String USERNAME = "sonwoang";
-    private static final String IO_KEY = "aio_UzjK87RRLSNuYFvdQNWEegpe4R27";
+    private static final String password = "aio_UzjK87RRLSNuYFvdQNWEegpe4R27";
 
     public static void sendData(String value, String feedName) {
         try {
@@ -16,7 +16,7 @@ public class AdafruitIOClient {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("X-AIO-Key", IO_KEY);
+            conn.setRequestProperty("X-AIO-Key", password);
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
@@ -46,7 +46,7 @@ public class AdafruitIOClient {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("X-AIO-Key", IO_KEY);
+            conn.setRequestProperty("X-AIO-Key", password);
 
             int responseCode = conn.getResponseCode();
             if (responseCode == 200) {
