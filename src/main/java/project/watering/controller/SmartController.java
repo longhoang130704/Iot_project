@@ -59,22 +59,22 @@ public class SmartController {
 
         // temperature state
         String temperatureSensor = AdafruitIOClient.getLatestData("v1");
-        // System.out.println(temperatureSensor);
+        System.out.println(temperatureSensor);
         temperatureState = Float.parseFloat(DataFromFeed.getOnlyValue(temperatureSensor));
 
         // light level state
         String lightSensor = AdafruitIOClient.getLatestData("v4");
-        // System.out.println(lightSensor);
+        System.out.println(lightSensor);
         lightLevel = Integer.parseInt(DataFromFeed.getOnlyValue(lightSensor));
 
         // moisture soil state
-        String soilSensor = AdafruitIOClient.getLatestData("v1");
-        // System.out.println(soilSensor);
+        String soilSensor = AdafruitIOClient.getLatestData("v3");
+        System.out.println(soilSensor);
         moistureSoilState = Float.parseFloat(DataFromFeed.getOnlyValue(soilSensor));
 
         // moisture air state
-        String airSensor = AdafruitIOClient.getLatestData("v1");
-        // System.out.println(airSensor);
+        String airSensor = AdafruitIOClient.getLatestData("v2");
+        System.out.println(airSensor);
         moistureAirState = Float.parseFloat(DataFromFeed.getOnlyValue(airSensor));
     }
 }

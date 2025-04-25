@@ -12,8 +12,8 @@ import project.watering.repository.StateRepository;
 
 @Service
 public class SmartLogic {
-    private static final int MOISTURE_SOIL_THRESHOLD = 40; // % độ ẩm đất
-    private static final int LIGHT_THRESHOLD = 300; // lux
+    private static final int MOISTURE_SOIL_THRESHOLD = 30; // % độ ẩm đất
+    private static final int LIGHT_THRESHOLD = 20; // lux
     private static final int TEMP_MAX = 35; // °C
     private static final int HUMIDITY_AIR_MAX = 75; // % độ ẩm không khí
 
