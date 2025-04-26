@@ -10,7 +10,17 @@ spring.data.mongodb.database=
 
 # api document
 
+# Action
+
+endpoint
+
+GET: /action
+
+GET: /action/{userID}
+
 # State of all
+
+GET: /last-state
 
 GET: /state
 
