@@ -20,23 +20,23 @@ parram: page (default 0), size (default 10)
 
 endpoint: 
 
-GET: /light/on
+GET: /light/on param: userId, gardenName, minute: so phut den hoat dong
 
-GET: /light/off
+GET: /light/off param: userId, gardenName
 
 # pump
 
 endpoint: 
 
-GET: /pump/on
+GET: /pump/on param: userId, gardenName
 
-GET: /pump/off
+GET: /pump/off param: userId, gardenName
 
 # smart-controller
 
-GET: /smart-controller/start
+GET: /smart-controller/start param: userId, gardenName
 
-GET: /smart-controller/stop
+GET: /smart-controller/stop param: userId, gardenName
 
 # system crash - solve problem
 
