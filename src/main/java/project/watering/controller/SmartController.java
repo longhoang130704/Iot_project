@@ -5,8 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.watering.bean.SmartControllerState;
+import project.watering.entity.Action;
+import project.watering.service.interfaceLayer.ActionService;
 import project.watering.service.interfaceLayer.AdafruitIOClient;
 import project.watering.service.logicLayer.SmartLogic;
 import project.watering.util.DataFromFeed;
@@ -17,17 +21,21 @@ public class SmartController {
     @Autowired
     private SmartLogic smartLogic;
 
+    @Autowired
+    private ActionService actionService;
+
+    @Autowired
+    private SmartControllerState smartControllerState;
+
     public static float moistureSoilState;
     public static float moistureAirState;
     public static int lightLevel;
     public static float temperatureState;
 
-    private boolean enabled = false; // controller scheduling
-
     // @Scheduled(fixedRate = 300000) 5 phut
     @Scheduled(fixedRate = 10000) // 10s
     public void smartController() {
-        if (!enabled)
+        if (!smartControllerState.isEnabled())
             return;
         // get all state
         getStateOfAll();
@@ -38,18 +46,35 @@ public class SmartController {
                 lightLevel,
                 temperatureState);
 
-        // return
     }
 
     @GetMapping("/start")
-    public ResponseEntity<String> start() {
-        enabled = true;
+    public ResponseEntity<String> start(@RequestParam String userId, @RequestParam String gardenName) {
+        smartControllerState.setEnabled(true);
+        // luu lai ai da thao tacs
+        Action newAction = new Action();
+        newAction.setUserId(userId);
+        newAction.setGardenName(gardenName);
+        newAction.setAction(4);
+
+        // save to database
+        actionService.saveAction(newAction);
+
         return ResponseEntity.ok().body("start sucess");
     }
 
     @GetMapping("/stop")
-    public ResponseEntity<String> stop() {
-        enabled = false;
+    public ResponseEntity<String> stop(@RequestParam String userId, @RequestParam String gardenName) {
+        smartControllerState.setEnabled(false);
+        // luu lai ai da thao tac
+        Action newAction = new Action();
+        newAction.setUserId(userId);
+        newAction.setGardenName(gardenName);
+        newAction.setAction(5);
+
+        // save to database
+        actionService.saveAction(newAction);
+
         return ResponseEntity.ok().body("stop sucess");
     }
 

@@ -24,4 +24,7 @@ public class State {
     private String pumpState;
     private String lightState;
 
+    private String modeLight;
+    private String modePump;
+
 }
