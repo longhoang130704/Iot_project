@@ -65,6 +65,62 @@ public class SmartLogic {
         System.out.println(savedState.toString());
     }
 
+    // Gọi phương thức này để cập nhật trạng thái thiết bị pump
+    public void updateStatePump(float humidityAir, float moistureSoil, int lightLevel, float temperature) {
+        controlPump(moistureSoil, temperature, humidityAir);
+
+        // update savedState and save to database
+        savedState.setAirState(humidityAir);
+        savedState.setSoilState(moistureSoil);
+        savedState.setLightLevelState(lightLevel);
+        savedState.setTemperatureState(temperature);
+
+        if (smartControllerState.isEnabled()) {
+            // set light vs pum auto
+            savedState.setModeLight("auto");
+            savedState.setModePump("auto");
+            System.out.println("da chay va thay enabled true");
+        } else {
+            // set light pump thu cong
+            savedState.setModeLight("notAuto");
+            savedState.setModePump("notAuto");
+            System.out.println("da chay va thay enabled false");
+        }
+
+        // save to database
+        stateRepository.save(savedState);
+
+        System.out.println(savedState.toString());
+    }
+
+    // Gọi phương thức này để cập nhật trạng thái thiết bị light
+    public void updateStateLight(float humidityAir, float moistureSoil, int lightLevel, float temperature) {
+        controlLight(lightLevel);
+
+        // update savedState and save to database
+        savedState.setAirState(humidityAir);
+        savedState.setSoilState(moistureSoil);
+        savedState.setLightLevelState(lightLevel);
+        savedState.setTemperatureState(temperature);
+
+        if (smartControllerState.isEnabled()) {
+            // set light vs pum auto
+            savedState.setModeLight("auto");
+            savedState.setModePump("auto");
+            System.out.println("da chay va thay enabled true");
+        } else {
+            // set light pump thu cong
+            savedState.setModeLight("notAuto");
+            savedState.setModePump("notAuto");
+            System.out.println("da chay va thay enabled false");
+        }
+
+        // save to database
+        stateRepository.save(savedState);
+
+        System.out.println(savedState.toString());
+    }
+
     private void controlPump(float moistureSoil, float temperature, float humidityAir) {
 
         boolean islessMinAir = humidityAir < HUMIDITY_AIR_MIN;

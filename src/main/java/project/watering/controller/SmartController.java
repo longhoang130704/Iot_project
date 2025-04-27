@@ -78,6 +78,100 @@ public class SmartController {
         return ResponseEntity.ok().body("stop sucess");
     }
 
+    // ________________________PUMP_______________________________________
+    // @Scheduled(fixedRate = 300000) 5 phut
+    @Scheduled(fixedRate = 10000) // 10s
+    public void smartControllerPump() {
+        if (!smartControllerState.isEnabledPump())
+            return;
+        // get all state
+        getStateOfAll();
+
+        smartLogic.updateStatePump(
+                moistureAirState,
+                moistureSoilState,
+                lightLevel,
+                temperatureState);
+
+    }
+
+    @GetMapping("/pump/start")
+    public ResponseEntity<String> startPump(@RequestParam String userId, @RequestParam String gardenName) {
+        smartControllerState.setEnabledPump(true);
+        // luu lai ai da thao tacs
+        Action newAction = new Action();
+        newAction.setUserId(userId);
+        newAction.setGardenName(gardenName);
+        newAction.setAction(6);
+
+        // save to database
+        actionService.saveAction(newAction);
+
+        return ResponseEntity.ok().body("start pump auto sucess");
+    }
+
+    @GetMapping("/pump/stop")
+    public ResponseEntity<String> stopPump(@RequestParam String userId, @RequestParam String gardenName) {
+        smartControllerState.setEnabledPump(false);
+        // luu lai ai da thao tac
+        Action newAction = new Action();
+        newAction.setUserId(userId);
+        newAction.setGardenName(gardenName);
+        newAction.setAction(7);
+
+        // save to database
+        actionService.saveAction(newAction);
+
+        return ResponseEntity.ok().body("stop pump auto sucess");
+    }
+
+    // ________________________LIGHT_______________________________________
+    // @Scheduled(fixedRate = 300000) 5 phut
+    @Scheduled(fixedRate = 10000) // 10s
+    public void smartControllerPumpLight() {
+        if (!smartControllerState.isEnabledLight())
+            return;
+        // get all state
+        getStateOfAll();
+
+        smartLogic.updateStateLight(
+                moistureAirState,
+                moistureSoilState,
+                lightLevel,
+                temperatureState);
+
+    }
+
+    @GetMapping("/light/start")
+    public ResponseEntity<String> startLight(@RequestParam String userId, @RequestParam String gardenName) {
+        smartControllerState.setEnabledLight(true);
+        // luu lai ai da thao tacs
+        Action newAction = new Action();
+        newAction.setUserId(userId);
+        newAction.setGardenName(gardenName);
+        newAction.setAction(8);
+
+        // save to database
+        actionService.saveAction(newAction);
+
+        return ResponseEntity.ok().body("start light auto sucess");
+    }
+
+    @GetMapping("/light/stop")
+    public ResponseEntity<String> stopLight(@RequestParam String userId, @RequestParam String gardenName) {
+        smartControllerState.setEnabledLight(false);
+        // luu lai ai da thao tac
+        Action newAction = new Action();
+        newAction.setUserId(userId);
+        newAction.setGardenName(gardenName);
+        newAction.setAction(9);
+
+        // save to database
+        actionService.saveAction(newAction);
+
+        return ResponseEntity.ok().body("stop light auto sucess");
+    }
+
     private void getStateOfAll() {
         System.out.println("---------------------------------------------");
         System.out.println("get all state");

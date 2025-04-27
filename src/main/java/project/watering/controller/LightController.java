@@ -1,8 +1,5 @@
 package project.watering.controller;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +28,7 @@ public class LightController {
 
     @GetMapping("/on")
     public ResponseEntity<String> turnOnPump(@RequestParam String userId,
-            @RequestParam String gardenName,
-            @RequestParam int minute) {
+            @RequestParam String gardenName) {
         try {
             light.turnOn();
             // luu lai action
@@ -51,21 +47,6 @@ public class LightController {
             if (!smartControllerState.isEnabled()) {
                 System.out.println("Da tat tu dong");
             }
-
-            // hen gio tat den
-            // chuyển phút -> giây
-            int durationSeconds = minute * 60;
-
-            // hẹn giờ tắt
-            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-            scheduler.schedule(() -> {
-                try {
-                    light.turnOff();
-                    System.out.println("Đã tự động tắt đèn sau " + minute + " phút");
-                } catch (Exception e) {
-                    System.out.println("Lỗi khi tắt đèn tự động: " + e.getMessage());
-                }
-            }, durationSeconds, java.util.concurrent.TimeUnit.SECONDS);
 
             return ResponseEntity.ok().body("Turn on light success");
 

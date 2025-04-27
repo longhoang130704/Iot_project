@@ -1,5 +1,7 @@
 package project.watering.entity;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -27,4 +29,5 @@ public class State {
     private String modeLight;
     private String modePump;
 
+    LocalDateTime time = LocalDateTime.now();
 }
