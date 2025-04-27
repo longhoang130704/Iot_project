@@ -16,7 +16,7 @@ endpoint
 
 GET: /action
 
-GET: /action/{userID}
+GET: /action/{gardenName}
 
 # State of all
 
@@ -30,7 +30,7 @@ parram: page (default 0), size (default 10)
 
 endpoint: 
 
-GET: /light/on param: userId, gardenName, minute: so phut den hoat dong
+GET: /light/on param: userId, gardenName
 
 GET: /light/off param: userId, gardenName
 
@@ -47,6 +47,14 @@ GET: /pump/off param: userId, gardenName
 GET: /smart-controller/start param: userId, gardenName
 
 GET: /smart-controller/stop param: userId, gardenName
+
+GET: /smart-controller/pump/start param: userId, gardenName
+
+GET: /smart-controller/pump/stop param: userId, gardenName
+
+GET: /smart-controller/light/start param: userId, gardenName
+
+GET: /smart-controller/light/stop param: userId, gardenName
 
 # system crash - solve problem
 
