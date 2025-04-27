@@ -1,5 +1,6 @@
 package project.watering.service.interfaceLayer;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class ActionService {
         return actionRepository.findAll(pageable);
     }
 
-    public Optional<Action> getActionByUserId(String userId) {
-        return actionRepository.findByUserId(userId);
+    public Optional<List<Action>> getActionByGardenName(String gardenName) {
+        return actionRepository.findByGardenName(gardenName);
     }
 
     public Action saveAction(Action action) {

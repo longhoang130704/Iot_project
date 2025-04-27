@@ -1,5 +1,6 @@
 package project.watering.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,10 @@ public class ActionController {
         return ResponseEntity.ok(actions);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Action> getActionByUserId(@PathVariable String userId) {
-        Optional<Action> action = actionService.getActionByUserId(userId);
-        return action.map(ResponseEntity::ok)
+    @GetMapping("/{gardenName}")
+    public ResponseEntity<List<Action>> getActionByUserId(@PathVariable String gardenName) {
+        Optional<List<Action>> actions = actionService.getActionByGardenName(gardenName);
+        return actions.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

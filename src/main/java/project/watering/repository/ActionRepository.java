@@ -1,5 +1,6 @@
 package project.watering.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -13,5 +14,5 @@ import project.watering.entity.Action;
 public interface ActionRepository extends MongoRepository<Action, String> {
     Page<Action> findAll(Pageable pageable);
 
-    Optional<Action> findByUserId(String userId);
+    Optional<List<Action>> findByGardenName(String gardenName);
 }
