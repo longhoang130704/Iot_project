@@ -54,7 +54,7 @@ GET: /smart-controller/pump/start param: userId, gardenName
 
 GET: /smart-controller/pump/stop param: userId, gardenName
 
-GET: /smart-controller/light/start param: userId, gardenName, startTime ("06:04"), endTime ("08:45")
+GET: /smart-controller/light/start param: userId, gardenName, startTime ("06:04"), endTime ("08:45") (start và endtime là String)
 
 GET: /smart-controller/light/stop param: userId, gardenName
 
