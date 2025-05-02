@@ -1,5 +1,7 @@
 package project.watering.controller;
 
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -131,6 +133,16 @@ public class SmartController {
     public void smartControllerPumpLight() {
         if (!smartControllerState.isEnabledLight())
             return;
+
+        // them logic ve thoi gian start va end den
+        LocalTime now = LocalTime.now();
+        LocalTime start = smartControllerState.getStartTime();
+        LocalTime end = smartControllerState.getEndTime();
+
+        if (start != null && end != null && (now.isBefore(start) || now.isAfter(end))) {
+            // Ngoài khung giờ cho phép -> bỏ qua
+            return;
+        }
         // get all state
         getStateOfAll();
 
@@ -143,13 +155,24 @@ public class SmartController {
     }
 
     @GetMapping("/light/start")
-    public ResponseEntity<String> startLight(@RequestParam String userId, @RequestParam String gardenName) {
+    public ResponseEntity<String> startLight(@RequestParam String userId,
+            @RequestParam String gardenName,
+            @RequestParam String startTime, // Ví dụ "06:00"
+            @RequestParam String endTime // Ví dụ "18:00"
+    ) {
+        System.out.println(startTime);
+        System.out.println(endTime);
+
         smartControllerState.setEnabledLight(true);
+        smartControllerState.setStartTime(LocalTime.parse(startTime));
+        smartControllerState.setEndTime(LocalTime.parse(endTime));
+
         // luu lai ai da thao tacs
         Action newAction = new Action();
         newAction.setUserId(userId);
         newAction.setGardenName(gardenName);
         newAction.setAction(8);
+        newAction.setEndTime(LocalTime.parse(endTime));
 
         // save to database
         actionService.saveAction(newAction);

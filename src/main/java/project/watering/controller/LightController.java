@@ -1,7 +1,7 @@
 package project.watering.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+// import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import project.watering.bean.SmartControllerState;
 import project.watering.entity.Action;
 import project.watering.iot.Factory.Device;
+import project.watering.iot.Factory.FactoryRegistry;
 import project.watering.service.interfaceLayer.ActionService;
 
 @RestController
@@ -22,9 +23,10 @@ public class LightController {
     @Autowired
     private ActionService actionService;
 
-    @Autowired
-    @Qualifier("lightDevice")
-    private Device light;
+    // @Autowired
+    // @Qualifier("lightDevice")
+    // private Device light;
+    private Device light = FactoryRegistry.createDevice("light");
 
     @GetMapping("/on")
     public ResponseEntity<String> turnOnPump(@RequestParam String userId,

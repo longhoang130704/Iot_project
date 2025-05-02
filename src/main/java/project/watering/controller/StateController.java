@@ -1,8 +1,15 @@
 package project.watering.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +36,27 @@ public class StateController {
         //
         PageRequest pageable = PageRequest.of(page, size);
         return stateRepository.findAll(pageable);
+    }
+
+    @GetMapping("/state/last-7-days")
+    public ResponseEntity<List<State>> getLast7DaysState() {
+        List<State> result = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        for (int i = 0; i < 7; i++) {
+            LocalDate date = today.minusDays(i);
+            LocalDateTime startOfDay = date.atStartOfDay();
+            LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+
+            List<State> states = stateRepository
+                    .findByTimeBetweenOrderByTimeDesc(startOfDay, endOfDay);
+
+            if (!states.isEmpty()) {
+                result.add(states.get(0)); // lấy bản ghi mới nhất trong ngày
+            }
+        }
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/last-state")

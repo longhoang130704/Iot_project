@@ -1,6 +1,7 @@
 package project.watering.entity;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,5 +19,6 @@ public class Action {
     private int action;
 
     private LocalDateTime time = LocalDateTime.now();
+    private LocalTime endTime;
 
 }
