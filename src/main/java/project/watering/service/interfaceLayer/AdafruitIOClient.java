@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class AdafruitIOClient {
     private static final String USERNAME = "sonwoang";
-    private static final String password = "aio_BBGm76sEOE4Rq3Dm6ma5iBen158q";
+    private static final String password = "aio_TMhb47snjkvPxaIY5iS8oBmaPmBm";
 
     public static void sendData(String value, String feedName) {
         try {
